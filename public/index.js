@@ -23,7 +23,7 @@ function handleSubmit(e) {
             countrySelect.value = 1
             nameInput.value = ''
             document.querySelector('#rating-one').checked = true
-            getCities()
+            // getCities()
         })
 }
 
