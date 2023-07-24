@@ -230,8 +230,14 @@ module.exports = {
             ('Yemen'),
             ('Zambia'),
             ('Zimbabwe');
-
+    
+        INSERT INTO cities(name, rating, country_id)
+		VALUES
+            ('Muscat', 1, 131), 
+            ('Tbilisi', 4, 64),
+            ('Barselona', 1, 165)
         `)
+
         .then(() => {
             console.log('DB seeded!')
             res.sendStatus(200)
@@ -279,6 +285,8 @@ module.exports = {
         FROM cities as ci
         JOIN countries as ct
         ON ci.country_id = ct.id
+        ORDER BY rating DESC;
+       
         `) 
         .then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err=> res.status(500).send(err))
@@ -300,26 +308,5 @@ module.exports = {
             console.log(err);
             res.status(500).send(err)
         });
-    },
-
-    updateCities: (req, res) => {
-        sequelize
-        .query(`
-        SELECT 
-        cities.ci_id,
-        ci.name as city,
-        ci.rating as rating,
-        ct.name as country, 
-        FROM cities
-        JOIN countries ON ci.country_id + ct.country_id
-        ORDER BY ci.rating DESC
-        `)
-        .then(dbRes => {
-            console.log(dbRes[0]);
-            res.status(200).send(dbRes[0])})
-        .catch(err => {
-            console.log(err);
-            res.status(500).send(err)})
-
     }
 }
